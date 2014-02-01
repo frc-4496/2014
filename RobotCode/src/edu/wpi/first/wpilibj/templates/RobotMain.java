@@ -50,7 +50,7 @@ public class RobotMain extends IterativeRobot {
         //mainDrive.tankDrive(drive1.getY(), drive2.getY());
         
         //arcade drive code commented out, for future reference
-        mainDrive.arcadeDrive(drive1, drive1.getAxisChannel(Joystick.AxisType.kX), drive1, drive1.getAxisChannel(Joystick.AxisType.kY));
+        mainDrive.arcadeDrive(drive1);
     }
     
     /**

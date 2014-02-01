@@ -19,17 +19,15 @@ public class RobotMain extends IterativeRobot {
      * used for any initialization code.
      */
     //setup left and right drives and assign to pinouts
-    Victor leftDriveFront = new Victor(1);
-    Victor leftDriveBack = new Victor(2);
-    Victor rightDriveFront = new Victor(3);
-    Victor rightDriveBack = new Victor(4);
+    Victor leftDrive = new Victor(1);
+    Victor rightDrive = new Victor(2);
     
     //setup controllers
     Joystick drive1 = new Joystick(1);
     //Joystick drive2 = new Joystick(2); //leftover for tank drive if needed
     
     //setup main drive object and point to victors
-    RobotDrive mainDrive = new RobotDrive(leftDriveFront, leftDriveBack, rightDriveFront, rightDriveBack);
+    RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive);
     
     public void robotInit() {
         

@@ -45,10 +45,10 @@ public class RobotMain extends IterativeRobot {
      */
     public void teleopPeriodic() {
         //tankDrive function is called, and assigned joystick inputs
-        mainDrive.tankDrive(drive1.getY(), drive2.getY());
+        //mainDrive.tankDrive(drive1.getY(), drive2.getY());
         
         //arcade drive code commented out, for future reference
-        //mainDrive.arcadeDrive(drive1);
+        mainDrive.arcadeDrive(drive1);
     }
     
     /**

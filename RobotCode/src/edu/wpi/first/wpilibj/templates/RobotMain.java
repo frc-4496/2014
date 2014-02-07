@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class RobotMain extends IterativeRobot {
     /**
@@ -28,6 +30,13 @@ public class RobotMain extends IterativeRobot {
     
     //setup main drive object and point to victors
     RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive);
+    
+    //setup compressor
+    Compressor mainComp = new Compressor(1, 1);
+    
+    //setup solenoids
+    Solenoid solenoidFire = new Solenoid(2); //solenoid for firing system
+    Solenoid solenoidPickup = new Solenoid(3); //solenoid for pickup system
     
     public void robotInit() {
         
@@ -49,6 +58,10 @@ public class RobotMain extends IterativeRobot {
         
         //arcade drive code commented out, for future reference
         mainDrive.arcadeDrive(drive1);
+        drive1.getTrigger();
+        if(drive1.getTrigger()) {
+            mainComp.start();
+        }
     }
     
     /**

@@ -53,14 +53,22 @@ public class RobotMain extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+
+        //saved tankDrive for future reference
         //tankDrive function is called, and assigned joystick inputs
         //mainDrive.tankDrive(drive1.getY(), drive2.getY());
-        
-        //arcade drive code commented out, for future reference
+         
+        //arcadeDrive function is called, and assigned a joystick input
         mainDrive.arcadeDrive(drive1);
-        drive1.getTrigger();
-        if(drive1.getTrigger()) {
+        
+        //turn compressor on if trigger is pulled
+        if(drive1.getTrigger() == true) {
             mainComp.start();
+        }
+        
+        //turn compressor off if trigger is pulled
+        if(drive1.getTrigger() == false) {
+            mainComp.stop();
         }
     }
     

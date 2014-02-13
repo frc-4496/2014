@@ -61,8 +61,19 @@ public class RobotMain extends IterativeRobot {
         //arcadeDrive function is called, and assigned a joystick input
         mainDrive.arcadeDrive(drive1);
         
+        //turn the compresor on if needed
+        if(mainComp.getPressureSwitchValue() == false) {
+            mainComp.start();
+        }
+        
+        //stop the compressor when needed
+        if(mainComp.getPressureSwitchValue() == true) {
+            mainComp.stop();
+        }
+        
+        
         //turn compressor on if trigger is pulled
-        if(drive1.getTrigger() == true) {
+        /*if(drive1.getTrigger() == true) {
             mainComp.start();
         }
         
@@ -70,6 +81,7 @@ public class RobotMain extends IterativeRobot {
         if(drive1.getTrigger() == false) {
             mainComp.stop();
         }
+        */
     }
     
     /**

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 
 public class RobotMain extends IterativeRobot {
     /**
@@ -46,7 +47,13 @@ public class RobotMain extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        //fire the solenoid
+        solenoidFire.set(true);
+        Timer.delay(5);
+        solenoidFire.set(false);
         
+        //drive the robut forward
+        mainDrive.arcadeDrive(1.0, 0.0);
     }
 
     /**
@@ -71,6 +78,24 @@ public class RobotMain extends IterativeRobot {
             mainComp.stop();
         }
         
+        //write the code for the firing solenoid
+        if(drive1.getTrigger() == true) {
+            solenoidFire.set(true);
+        }
+        
+        if(drive1.getTrigger() == false) {
+            solenoidFire.set(false);
+        }
+        
+        //write the code for the lifting solenoid
+        if(drive1.getTrigger() == true) {
+            solenoidPickup.set(true);
+        }
+        
+        if(drive1.getTrigger() == false) {
+            solenoidPickup.set(false);
+        }
+        
         
         //turn compressor on if trigger is pulled
         /*if(drive1.getTrigger() == true) {
@@ -89,6 +114,5 @@ public class RobotMain extends IterativeRobot {
      */
     public void testPeriodic() {
         
-    }
-    
+    }   
 }

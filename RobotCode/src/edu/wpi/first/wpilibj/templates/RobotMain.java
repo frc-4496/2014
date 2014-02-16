@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Servo;
 
 public class RobotMain extends IterativeRobot {
     /**
@@ -24,6 +25,9 @@ public class RobotMain extends IterativeRobot {
     //setup left and right drives and assign to pinouts
     Victor leftDrive = new Victor(1);
     Victor rightDrive = new Victor(2);
+    
+    //lets set up the servo
+    Servo releaseServo = new Servo(1);
     
     //setup controllers
     Joystick drive1 = new Joystick(1);
@@ -40,6 +44,7 @@ public class RobotMain extends IterativeRobot {
     Solenoid solenoidPickup = new Solenoid(3); //solenoid for pickup system
     
     public void robotInit() {
+        releaseServo.setAngle(180);
         
     }
 
@@ -49,8 +54,12 @@ public class RobotMain extends IterativeRobot {
     public void autonomousPeriodic() {
         //fire the solenoid
         solenoidFire.set(true);
-        Timer.delay(5);
+        Timer.delay(2);
+        releaseServo.setAngle(120);
+        Timer.delay(2);
         solenoidFire.set(false);
+        Timer.delay(2);
+        releaseServo.setAngle(0);
         
         //drive the robut forward
         mainDrive.arcadeDrive(1.0, 0.0);
@@ -81,18 +90,20 @@ public class RobotMain extends IterativeRobot {
         //write the code for the firing solenoid
         if(drive1.getTrigger() == true) {
             solenoidFire.set(true);
-        }
-        
-        if(drive1.getTrigger() == false) {
+            Timer.delay(2);
+            releaseServo.setAngle(0);
+            Timer.delay(2);
             solenoidFire.set(false);
+            Timer.delay(2);
+            releaseServo.setAngle(0);
         }
         
         //write the code for the lifting solenoid
-        if(drive1.getTrigger() == true) {
+        if(drive1.getRawButton(1) == true) {
             solenoidPickup.set(true);
         }
         
-        if(drive1.getTrigger() == false) {
+        if(drive1.getRawButton(1) == false) {
             solenoidPickup.set(false);
         }
         

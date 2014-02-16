@@ -44,7 +44,9 @@ public class RobotMain extends IterativeRobot {
     Solenoid solenoidPickup = new Solenoid(3); //solenoid for pickup system
     
     public void robotInit() {
-        releaseServo.setAngle(180);
+        releaseServo.setAngle(0);
+        solenoidFire.set(false);
+        
         
     }
 
@@ -53,11 +55,11 @@ public class RobotMain extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         //fire the solenoid
-        solenoidFire.set(true);
+        solenoidFire.set(false);
         Timer.delay(2);
         releaseServo.setAngle(120);
         Timer.delay(2);
-        solenoidFire.set(false);
+        solenoidFire.set(true);
         Timer.delay(2);
         releaseServo.setAngle(0);
         
@@ -89,11 +91,11 @@ public class RobotMain extends IterativeRobot {
         
         //write the code for the firing solenoid
         if(drive1.getTrigger() == true) {
-            solenoidFire.set(true);
+            solenoidFire.set(false);
             Timer.delay(2);
             releaseServo.setAngle(0);
             Timer.delay(2);
-            solenoidFire.set(false);
+            solenoidFire.set(true);
             Timer.delay(2);
             releaseServo.setAngle(0);
         }

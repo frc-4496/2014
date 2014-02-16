@@ -15,39 +15,45 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Servo;
 
 public class RobotMain extends IterativeRobot {
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+    
     //setup left and right drives and assign to pinouts
     Victor leftDrive = new Victor(1);
     Victor rightDrive = new Victor(2);
     
-    //lets set up the servo
-    Servo releaseServo = new Servo(1);
+    //setup firing mechanism motor
+    Victor releaseMotor = new Victor(3);
     
     //setup controllers
     Joystick drive1 = new Joystick(1);
-    //Joystick drive2 = new Joystick(2); //leftover for tank drive if needed
     
     //setup main drive object and point to victors
     RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive);
     
     //setup compressor
-    Compressor mainComp = new Compressor(1, 1);
+    Compressor mainComp = new Compressor(1, 1); //main compressor for pneumatics
     
     //setup solenoids
     Solenoid solenoidFire = new Solenoid(2); //solenoid for firing system
     Solenoid solenoidPickup = new Solenoid(3); //solenoid for pickup system
     
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
     public void robotInit() {
-        releaseServo.setAngle(0);
-        solenoidFire.set(false);
+        //release the string release
+        releaseMotor.set(10);
+        Timer.delay(0.5);
+        releaseMotor.set(0);
+        Timer.delay(0.5);
+        releaseMotor.set(-10);
+        Timer.delay(0.5);
+        releaseMotor.set(0);
         
-        
+        //lower the piston arm
+        solenoidFire.set(true);
     }
 
     /**
@@ -55,26 +61,16 @@ public class RobotMain extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         //fire the solenoid
-        solenoidFire.set(false);
-        Timer.delay(2);
-        releaseServo.setAngle(120);
-        Timer.delay(2);
-        solenoidFire.set(true);
-        Timer.delay(2);
-        releaseServo.setAngle(0);
+        fireTheCannon();
         
         //drive the robut forward
-        mainDrive.arcadeDrive(1.0, 0.0);
+        mainDrive.arcadeDrive(1, 0);
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
-        //saved tankDrive for future reference
-        //tankDrive function is called, and assigned joystick inputs
-        //mainDrive.tankDrive(drive1.getY(), drive2.getY());
          
         //arcadeDrive function is called, and assigned a joystick input
         mainDrive.arcadeDrive(drive1);
@@ -82,44 +78,21 @@ public class RobotMain extends IterativeRobot {
         //turn the compresor on if needed
         if(mainComp.getPressureSwitchValue() == false) {
             mainComp.start();
-        }
-        
-        //stop the compressor when needed
-        if(mainComp.getPressureSwitchValue() == true) {
+        } else {
             mainComp.stop();
         }
         
         //write the code for the firing solenoid
         if(drive1.getTrigger() == true) {
-            solenoidFire.set(false);
-            Timer.delay(2);
-            releaseServo.setAngle(0);
-            Timer.delay(2);
-            solenoidFire.set(true);
-            Timer.delay(2);
-            releaseServo.setAngle(0);
+            fireTheCannon();
         }
         
         //write the code for the lifting solenoid
         if(drive1.getRawButton(1) == true) {
             solenoidPickup.set(true);
-        }
-        
-        if(drive1.getRawButton(1) == false) {
+        } else {
             solenoidPickup.set(false);
         }
-        
-        
-        //turn compressor on if trigger is pulled
-        /*if(drive1.getTrigger() == true) {
-            mainComp.start();
-        }
-        
-        //turn compressor off if trigger is pulled
-        if(drive1.getTrigger() == false) {
-            mainComp.stop();
-        }
-        */
     }
     
     /**
@@ -128,4 +101,18 @@ public class RobotMain extends IterativeRobot {
     public void testPeriodic() {
         
     }   
+    
+    public void fireTheCannon() {
+        solenoidFire.set(false);
+        Timer.delay(2);
+        releaseMotor.set(10);
+        Timer.delay(0.5);
+        releaseMotor.set(0);
+        Timer.delay(2);
+        solenoidFire.set(true);
+        Timer.delay(2);
+        releaseMotor.set(-10);
+        Timer.delay(0.5);
+        releaseMotor.set(0);
+    }
 }

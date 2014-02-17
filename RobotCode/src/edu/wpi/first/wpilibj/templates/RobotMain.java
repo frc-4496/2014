@@ -9,6 +9,9 @@ package edu.wpi.first.wpilibj.templates;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +25,14 @@ public class RobotMain extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    
+    Joystick mainStick = new Joystick(1); //setup main joystick to input 1
+    
+    Victor leftDrive = new Victor(1); //left motor setup to pinout 1
+    Victor rightDrive = new Victor(2); //right motor setup to pinout 2
+    
+    RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive); //assign leftDrive and rightDrive to mainDrive
+    
     public void robotInit() {
 
     }
@@ -37,7 +48,7 @@ public class RobotMain extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+        mainDrive.arcadeDrive(mainStick); //assign mainDrive to the arcade type and assign to mainStick
     }
     
     /**

@@ -60,11 +60,12 @@ public class RobotMain extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        //fire the solenoid
+        /*//fire the solenoid
         fireTheCannon();
         
         //drive the robut forward
         mainDrive.arcadeDrive(1, 0);
+        */
     }
 
     /**
@@ -88,7 +89,7 @@ public class RobotMain extends IterativeRobot {
         }
         
         //write the code for the lifting solenoid
-        if(drive1.getRawButton(1) == true) {
+        if(drive1.getButton(Joystick.ButtonType.kNumButton) == true) {
             solenoidPickup.set(true);
         } else {
             solenoidPickup.set(false);

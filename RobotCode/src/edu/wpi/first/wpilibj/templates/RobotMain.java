@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.Timer;
 public class RobotMain extends IterativeRobot {
     
     //setup left and right drives and assign to pinouts
-    Victor leftDrive = new Victor(1);
-    Victor rightDrive = new Victor(2);
+    Victor leftDrive = new Victor(2);
+    Victor rightDrive = new Victor(1);
     
     //setup firing mechanism motor
     Victor releaseMotor = new Victor(3);
@@ -34,7 +34,7 @@ public class RobotMain extends IterativeRobot {
     //setup compressor
     Compressor mainComp = new Compressor(1, 1); //main compressor for pneumatics
     
-    //setup solenoids
+    //setup solenoids]
     Solenoid solenoidFire = new Solenoid(2); //solenoid for firing system
     Solenoid solenoidPickup = new Solenoid(3); //solenoid for pickup system
     
@@ -60,12 +60,12 @@ public class RobotMain extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        /*//fire the solenoid
+        //fire the solenoid
         fireTheCannon();
         
         //drive the robut forward
         mainDrive.arcadeDrive(1, 0);
-        */
+        
     }
 
     /**
@@ -90,9 +90,9 @@ public class RobotMain extends IterativeRobot {
         
         //write the code for the lifting solenoid
         if(drive1.getButton(Joystick.ButtonType.kNumButton) == true) {
-            solenoidPickup.set(true);
-        } else {
             solenoidPickup.set(false);
+        } else {
+            solenoidPickup.set(true);
         }
     }
     

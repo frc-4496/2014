@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package edu.wpi.first.wpilibj.templates;
 
 
@@ -33,6 +32,8 @@ public class RobotMain extends IterativeRobot {
     
     RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive); //assign leftDrive and rightDrive to mainDrive
     
+    int counter;
+    
     public void robotInit() {
 
     }
@@ -49,6 +50,12 @@ public class RobotMain extends IterativeRobot {
      */
     public void teleopPeriodic() {
         mainDrive.arcadeDrive(mainStick); //assign mainDrive to the arcade type and assign to mainStick
+        System.out.println(mainDrive.isAlive());
+        System.out.println(mainDrive.isSafetyEnabled());
+        System.out.println(mainDrive.getExpiration());
+        System.out.println(leftDrive.getSpeed() + " LEFT SPEED | " + rightDrive.getSpeed() + " RIGHT SPEED");
+        System.out.println(leftDrive.getPosition() + " LEFT POS | " + rightDrive.getPosition() + " RIGHT POS");
+        System.out.println(mainStick.getX() + " X, " + mainStick.getY() + " Y");
     }
     
     /**

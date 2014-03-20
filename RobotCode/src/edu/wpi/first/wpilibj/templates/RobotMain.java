@@ -43,17 +43,7 @@ public class RobotMain extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        //release the string release
-        releaseMotor.set(10);
-        Timer.delay(0.5);
-        releaseMotor.set(0);
-        Timer.delay(0.5);
-        releaseMotor.set(-10);
-        Timer.delay(0.5);
-        releaseMotor.set(0);
         
-        //lower the piston arm
-        solenoidFire.set(true);
     }
 
     /**
@@ -61,11 +51,12 @@ public class RobotMain extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         //fire the solenoid
-        fireTheCannon();
+        solenoidFire.set(true);
+        Timer.delay(0.5);
+        solenoidFire.set(false);
         
         //drive the robut forward
         mainDrive.arcadeDrive(1, 0);
-        
     }
 
     /**
@@ -79,20 +70,24 @@ public class RobotMain extends IterativeRobot {
         //turn the compresor on if needed
         if(mainComp.getPressureSwitchValue() == false) {
             mainComp.start();
-        } else {
+        } else if(mainComp.getPressureSwitchValue() == true) {
             mainComp.stop();
         }
         
         //write the code for the firing solenoid
         if(drive1.getTrigger() == true) {
-            fireTheCannon();
+            solenoidFire.set(true);
+            Timer.delay(0.25);
+        } else if (drive1.getTrigger() == false) {
+            solenoidFire.set(false);
         }
         
         //write the code for the lifting solenoid
         if(drive1.getButton(Joystick.ButtonType.kNumButton) == true) {
             solenoidPickup.set(false);
-        } else {
-            solenoidPickup.set(true);
+            Timer.delay(0.5);
+        } else if (drive1.getButton(Joystick.ButtonType.kNumButton) == false){
+            solenoidPickup.set(true);   
         }
     }
     
@@ -102,18 +97,4 @@ public class RobotMain extends IterativeRobot {
     public void testPeriodic() {
         
     }   
-    
-    public void fireTheCannon() {
-        solenoidFire.set(false);
-        Timer.delay(2);
-        releaseMotor.set(10);
-        Timer.delay(0.5);
-        releaseMotor.set(0);
-        Timer.delay(2);
-        solenoidFire.set(true);
-        Timer.delay(2);
-        releaseMotor.set(-10);
-        Timer.delay(0.5);
-        releaseMotor.set(0);
-    }
 }
